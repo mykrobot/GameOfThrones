@@ -8,16 +8,14 @@
 
 import Foundation
 
-let CharacterNotificationCompleteKey = "charactersCompleted"
+let CharactersDidChangeNotification = "charactersCompleted"
 
 struct CharacterController {
-    
-    static let sharedController = CharacterController()
     
     private(set) var charactersArray = [Character]() {
         didSet {
             let nc = NSNotificationCenter.defaultCenter()
-            nc.postNotificationName(CharacterNotificationCompleteKey, object: nil)
+            nc.postNotificationName(CharactersDidChangeNotification, object: nil)
         }
     }
     
@@ -33,3 +31,4 @@ struct CharacterController {
         charactersArray = characters
     }
 }
+

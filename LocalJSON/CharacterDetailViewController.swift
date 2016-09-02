@@ -35,7 +35,7 @@ class CharacterDetailViewController: UIViewController {
         }
     }
     
-    func updateViewsWith(character: Character) {
+    private func updateViewsWith(character: Character) {
         nameLabel.text = character.name
         idLabel.text = character.id
         genderLabel.text = character.gender

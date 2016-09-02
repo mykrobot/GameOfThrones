@@ -27,6 +27,7 @@ class CharacterCollectionViewCell: UICollectionViewCell {
         self.contentView.layer.borderWidth = 2
         self.contentView.layer.borderColor = UIColor.blackColor().CGColor
         self.contentView.layer.cornerRadius = 8
+        self.contentView.layer.masksToBounds = true
     }
     
 }

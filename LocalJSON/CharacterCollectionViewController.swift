@@ -11,17 +11,19 @@ import UIKit
 private let reuseIdentifier = "characterCell"
 
 class CharacterCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-
+    
     @IBOutlet weak private var flowLayout: UICollectionViewFlowLayout!
     private let kMargin = CGFloat(2.0)
+    
+    let characterController = CharacterController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupFlowLayout()
         let nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver(self, selector: #selector(updateViews(_:)), name: CharacterNotificationCompleteKey, object: nil)
+        nc.addObserver(self, selector: #selector(updateViews(_:)), name: CharactersDidChangeNotification, object: nil)
     }
-
+    
     @objc private func updateViews(notification: NSNotification) {
         collectionView?.reloadData()
     }
@@ -33,26 +35,26 @@ class CharacterCollectionViewController: UICollectionViewController, UICollectio
     }
     
     // MARK: - Navigation
-
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "toDetailSegue" {
             let detailVC = segue.destinationViewController as? CharacterDetailViewController
             if let cell = (sender as? UICollectionViewCell), indexPath = collectionView?.indexPathForCell(cell) {
-                let character = CharacterController.sharedController.charactersArray[indexPath.item]
+                let character = characterController.charactersArray[indexPath.item]
                 detailVC?.character = character
             }
         }
     }
- 
+    
     // MARK: UICollectionViewDataSource
-
+    
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return CharacterController.sharedController.charactersArray.count
+        return characterController.charactersArray.count
     }
-
+    
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as? CharacterCollectionViewCell
-        let character = CharacterController.sharedController.charactersArray[indexPath.row]
+        let character = characterController.charactersArray[indexPath.row]
         cell?.updateViewWithCharacter(character)
         return cell ?? CharacterCollectionViewCell()
     }
@@ -69,7 +71,7 @@ class CharacterCollectionViewController: UICollectionViewController, UICollectio
         
         let viewHeight = view.frame.height
         let viewHeightMinusMargin = viewHeight - 6 * kMargin
-        let itemDimensionHeight = viewHeightMinusMargin / 6.0
+        let itemDimensionHeight = viewHeightMinusMargin / 5.0
         
         return CGSize(width: itemDimension, height: itemDimensionHeight)
     }
