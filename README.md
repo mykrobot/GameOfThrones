@@ -36,7 +36,7 @@ Create a model controller that will manage the parsing of the JSON and storing y
 > *Is a singleton necessary here? Why or why not?*
 >  *What are the differences between a delegate and an NSNotification?*
 
-1. Add a `charactersArray` property told store all character objects. Make the array setable only from within the scope of `CharacterController`, thus making it a readonly property to all other structs of classes. 
+1. Add a `charactersArray` property to store all character objects. Make the array setable only from within the scope of `CharacterController`, thus making it a readonly property to all other structs of classes. 
 2. Add a property observer to the `charactersArray` so that every time the property gets set it will post an NSNotification. 
 3. Create the notification `CharactersDidChangeNotification`. Post the notification from inside the property observer on the `charactersArray`.
 4. Create a `getCharacters()` function that will handle all of the JSON parsing. Access the `thrones.json` file by getting the file path for it through the `mainBundle`.  Initialize all the character objects and store them in the `charactersArray`.
